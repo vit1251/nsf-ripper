@@ -1,14 +1,14 @@
-nsf-ripper
-==========
+# nsf-ripper
 
 NES game sound file (.nsf) music extractor to FLAC format
 
-demo NSF files from [Zophar's music](https://www.zophar.net/music/nintendo-nes-nsf)
+# depends
+    - 
+    - lib64flac-devel
 
-some files from [gme project](https://github.com/mcfiredrill/libgme)
+# build
 
-build
-=====
+
 
 run
 1. `cmake [PATH] -DWITH_OGG=OFF -DCMAKE_BUILD_TYPE=Release`

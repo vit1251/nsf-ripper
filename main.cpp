@@ -1,10 +1,11 @@
+
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <vector>
 
 #include <FLAC/all.h>
-#include <gme.h>
+#include <gme/gme.h>
 
 using namespace std;
 namespace fs = filesystem;
@@ -59,6 +60,15 @@ vector<int> workOnTrack(Music_Emu* emu, int track) {
     return res;
 }
 
+std::string pad(std::string value) {
+    unsigned size = 8;
+    std::string result = value;
+    while (result.size() < size) {
+        result = "0" + result;
+    }
+    return result;
+}
+
 int main(int argc, char* argv[]) {
     if (argc != 2) {
         cout << "Need nsf file" << endl;
@@ -77,7 +87,9 @@ int main(int argc, char* argv[]) {
         vector<int> raw = workOnTrack(emu, i);
         vector<uint8_t> flac = toFlac(raw, to_string(i + 1));
         ofstream out;
-        out.open(nsf.root_path() / nsf.stem() / (to_string(i + 1) + ".flac"), ios::binary | ios::out);
+        std::string name = pad(to_string(i + 1)) + ".flac";
+        std::string filename = nsf.root_path() / nsf.stem() / name;
+        out.open(filename, ios::binary | ios::out);
         out.write((char*)flac.data(), flac.size());
         cout << i + 1 << "/" << total << "\r";
         cout.flush();
